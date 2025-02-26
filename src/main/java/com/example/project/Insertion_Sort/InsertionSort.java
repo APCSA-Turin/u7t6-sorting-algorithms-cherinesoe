@@ -5,22 +5,23 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class InsertionSort {
+    private static int insertionCount = 0;
+    private static int selectionCount = 0;
+
+    public static int getInsertionCount () {return insertionCount;}
+    public static int getSelectionCount () {return selectionCount;}
 
     // PART A. implementing insertion sort
     public static int[] insertionSort(int[] elements) {
         int temp = 0;
         for (int i = 1; i < elements.length; i++) {
-            boolean inserted = false;
             int idx = i;
-            while (!inserted && idx >= 1) {
-                if (elements[idx] < elements[idx - 1]) {
-                    temp = elements[idx];
-                    elements[idx] = elements[idx - 1];
-                    elements[idx - 1] = temp;
-                    idx--;
-                } else {
-                    inserted = true;
-                }
+            while (idx >= 1 && elements[idx] < elements[idx - 1]) {
+                insertionCount++;
+                temp = elements[idx];
+                elements[idx] = elements[idx - 1];
+                elements[idx - 1] = temp;
+                idx--;
             }
         }
         return elements;
@@ -31,6 +32,7 @@ public class InsertionSort {
         for (int i = 0; i < elements.length; i++) {
             int min = i;
             for (int j = i + 1; j < elements.length; j++) {
+                selectionCount++;
                 if (elements[j] < elements[min]) {
                     min = j;
                 }
@@ -50,6 +52,7 @@ public class InsertionSort {
             int idx = i;
             boolean inserted = false;
             while (!inserted && idx >= 1) {
+                insertionCount++;
                 if (words.get(idx - 1).compareTo(words.get(idx)) > 0) {
                     words.set(idx, words.set(idx - 1, words.get(idx)));
                     idx--;
@@ -58,17 +61,20 @@ public class InsertionSort {
                 }
             }
         }
+        System.out.println("Insertion Loops: " + InsertionSort.getInsertionCount());
         return words;
     }
 
     public static ArrayList<String> selectionSortWordList(ArrayList<String> words) {
         for (int i = 0; i < words.size(); i++) {
             for (int j = i + 1; j < words.size(); j++) {
+                selectionCount++;
                 if (words.get(i).compareTo(words.get(j)) > 0) {
                     words.set(j, words.set(i, words.get(j)));
                 }
             }
         }
+        System.out.println("Selection Loops: " + InsertionSort.getSelectionCount());
         return words;
     }
 
